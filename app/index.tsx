@@ -5,10 +5,31 @@ export default function Index() {
   return (
     
     <ScrollView>
-        <CardLista nome= {'gabriel'}  lista = {['Coca-Cola','Suco de Laranja Natural','Água Mineral','Energético Red Bull']}></CardLista>
+      <ClickVovo></ClickVovo>
     </ScrollView>
   );
 }
+
+let valor = 1; 
+function ClickVovo(){
+
+  const botoesExtras=<>
+    <button onClick= {()=> setQuantidade(quantidade - 1)}>-</button> 
+    <button onClick= {()=> setQuantidade(quantidade - quantidade)}> 0</button> 
+  </>
+  
+  const [quantidade,setQuantidade] = React.useState(0);
+    return(
+      <>
+        <h1>Cookie Clicker</h1>
+        <p>quantidade de cookies: {quantidade}</p>
+        <p>Vovó</p>
+        <input type="checkbox" onChange={()=> valor == 10? valor = 1: valor = 10} />
+        <button onClick= {()=> setQuantidade(quantidade + valor)}>+</button> 
+        {quantidade? botoesExtras:null}
+      </>
+    )
+  }
 
 function CardLista({nome,lista}){
   
@@ -35,9 +56,6 @@ function Lista({lista}){
 
   )
 }
-
-
-
 
 function CookieClicker(){
 const botoesExtras=<>
