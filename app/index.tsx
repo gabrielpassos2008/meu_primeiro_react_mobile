@@ -1,87 +1,76 @@
 import React from "react";
-import { ScrollView } from "react-native";
 
 export default function Index() {
+  const [jogadorLogado, setjogadorLogado] = React.useState(false);
+
   return (
-    
-    <ScrollView>
-      <ClickVovo></ClickVovo>
-    </ScrollView>
+    <div>
+      <Login 
+        jogadorLogado={jogadorLogado} 
+        setjogadorLogado={setjogadorLogado} 
+      />
+
+      <CookieClicker 
+        jogadorLogado={jogadorLogado} 
+      />
+    </div>
   );
 }
 
-let valor = 1; 
-function ClickVovo(){
+function CookieClicker({ jogadorLogado }) {
+  const [cookies, setCookies] = React.useState(0);
+  const [vovoLigada, setVovoLigada] = React.useState(false);
 
-  const botoesExtras=<>
-    <button onClick= {()=> setQuantidade(quantidade - 1)}>-</button> 
-    <button onClick= {()=> setQuantidade(quantidade - quantidade)}> 0</button> 
-  </>
-  
-  const [quantidade,setQuantidade] = React.useState(0);
-    return(
-      <>
-        <h1>Cookie Clicker</h1>
-        <p>quantidade de cookies: {quantidade}</p>
-        <p>Vovó</p>
-        <input type="checkbox" onChange={()=> valor == 10? valor = 1: valor = 10} />
-        <button onClick= {()=> setQuantidade(quantidade + valor)}>+</button> 
-        {quantidade? botoesExtras:null}
-      </>
-    )
+  function clickCookie(){ 
+    let quantidadeDeCookies = vovoLigada ? 10 : 1; 
+    setCookies(cookies = quantidadeDeCookies)
   }
+  if (!jogadorLogado) return null;
 
-function CardLista({nome,lista}){
-  
-  const [aparecer, setTrue] = React.useState(false);
-
-  return(
-    <>
-     <h1>Seja bem vindo </h1>
-     <p>Nome: {nome} </p>
-     <button onClick={()=>setTrue(!aparecer)}>Datalhes</button>
-     {aparecer? <Lista lista={lista}></Lista>: null}
-    </>
-  )
+  return (
+    <div>
+      <h2>Cookies: {cookies}</h2>
+      <input 
+        type="button"
+        value="Clique no Cookie"
+        onClick={clickCookie}
+      />
+      <input 
+        type="button"
+        value="Ativar Vovó"
+        onClick={() => setVovoLigada(true)}
+      />
+    </div>
+  );
 }
+function Login({ setjogadorLogado }) {
+  const [nome, setNome] = React.useState("");
 
-function Lista({lista}){
-  return(
-
-  <>
-    <ol>
-      {lista.map(produtos => <li>{produtos}</li>)}
-    </ol>
-  </>
-
-  )
-}
-
-function CookieClicker(){
-const botoesExtras=<>
-  <button onClick= {()=> setQuantidade(quantidade - 1)}> clique aqui para dimunir um cookie</button> 
-  <button onClick= {()=> setQuantidade(quantidade - quantidade)}> clique aqui para zerar um cookie</button> 
-</>
-const [quantidade,setQuantidade] = React.useState(0);
-
-function zerarCookie(){
-  setQuantidade(quantidade - quantidade)
-}
-
-function diminuirCookie(){
-  setQuantidade(quantidade - quantidade)
-}
-
-  return(
-    <>
-      <h1>Cookie Clicker</h1>
-      <p>quantidade de cookies: {quantidade}</p>
-      <button onClick= {()=> setQuantidade(quantidade + 1)}> clique aqui para ganhar um cookie</button> 
-      {quantidade? botoesExtras:null}
-    </>
-
-
-  )
+  function nomeMudou(evento) {
+    setNome(evento.target.value);
+  }
+  return (
+    <div>
+      <h1>Login</h1>
+      <form
+        onSubmit={(evento) => {
+          evento.preventDefault();
+          setjogadorLogado(true);
+          console.log("Jogador logado:", nome);
+        }}>
+        <label>Nome do jogador</label>
+        <input 
+          type="text"
+          name="nome"
+          onChange={nomeMudou}
+        />
+        <input 
+          type="submit"
+          value="Logar"
+        />
+      </form>
+    </div>
+  );
 }
 
 
