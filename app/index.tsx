@@ -1,76 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button, Text } from "react-native-paper";
+
 
 export default function Index() {
-  const [jogadorLogado, setjogadorLogado] = React.useState(false);
 
   return (
-    <div>
-      <Login 
-        jogadorLogado={jogadorLogado} 
-        setjogadorLogado={setjogadorLogado} 
-      />
-
-      <CookieClicker 
-        jogadorLogado={jogadorLogado} 
-      />
-    </div>
+    <>
+    <Text variant="displaySmall">dsadas</Text>
+    <CookieClicker></CookieClicker>   
+    </>
   );
 }
 
-function CookieClicker({ jogadorLogado }) {
-  const [cookies, setCookies] = React.useState(0);
-  const [vovoLigada, setVovoLigada] = React.useState(false);
-
-  function clickCookie(){ 
-    let quantidadeDeCookies = vovoLigada ? 10 : 1; 
-    setCookies(cookies = quantidadeDeCookies)
+function BarraDeCookies({quant, setCookies}) {
+  function resetarCookies() {
+    setCookies(0)
   }
-  if (!jogadorLogado) return null;
 
   return (
-    <div>
-      <h2>Cookies: {cookies}</h2>
-      <input 
-        type="button"
-        value="Clique no Cookie"
-        onClick={clickCookie}
-      />
-      <input 
-        type="button"
-        value="Ativar Vovó"
-        onClick={() => setVovoLigada(true)}
-      />
-    </div>
-  );
-}
-function Login({ setjogadorLogado }) {
-  const [nome, setNome] = React.useState("");
+    <>
+    <p onClick={resetarCookies}>{"🍪".repeat(quant/10)}</p>
 
-  function nomeMudou(evento) {
-    setNome(evento.target.value);
-  }
+    </>
+
+  );
+
+}
+
+function Manual(){
+  return(
+    <>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita minima fuga nulla ullam illo perferendis molestiae, laboriosam consectetur quas similique aut debitis esse blanditiis ad dicta unde maiores cumque quasi?</p>
+    </>
+  )
+
+}
+function CookieClicker() {
+  const [quantCookies, setQuantCookies] = useState(0)
+  const [mostrarManual, setMostrarManual] = React.useState(false);
+
+
+  function ganharCookie(){
+    // pode fazer várias coisas...
+
+    setQuantCookies(quantCookies + 1)
+    
+    
+    //...e outras coisas depois...   
+   }
+
   return (
-    <div>
-      <h1>Login</h1>
-      <form
-        onSubmit={(evento) => {
-          evento.preventDefault();
-          setjogadorLogado(true);
-          console.log("Jogador logado:", nome);
-        }}>
-        <label>Nome do jogador</label>
-        <input 
-          type="text"
-          name="nome"
-          onChange={nomeMudou}
-        />
-        <input 
-          type="submit"
-          value="Logar"
-        />
-      </form>
-    </div>
+    <>    
+    <input type="number" value={quantCookies}></input>  
+    <Button icon="camera" mode="contained" onPress={ganharCookie}>
+    Press me
+  </Button>  
+    <BarraDeCookies quant={quantCookies} setCookies={setQuantCookies}></BarraDeCookies>
+    
+    <button onClick={()=> {setMostrarManual(!mostrarManual)}}>instruçoes</button>
+    {mostrarManual? <Manual></Manual>: null}
+    </>
   );
+
 }
-
-
